@@ -48,6 +48,78 @@
 
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
+				<section>
+					<section>
+						<h2>New ECMAScript features Review</h2>
+            <ul>
+              <li>Arrow functions</li>
+              <li>Spread Operator</li>
+              <li>Object.assign</li>
+              <li>Object Rest/Spread Properties for ECMAScript (Stage 3)</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Arrow function</h2>
+            <pre><code contenteditable class ="javascript">
+              this.name = 'Window Name';
+
+              const sayName = function() {
+                return this.name;
+              }
+
+              const sayNameArrow = () => this.name;
+
+              const instructor = {
+                name: 'Marcela',
+                sayName: sayName,
+                sayNameArrow: sayNameArrow,
+              };
+
+              instructor.sayName(); // 'Marcela'
+              instructor.sayNameArrow(); // 'Window Name'
+            </code></pre>
+          </section>
+          <section>
+            <h2>Object.assign</h2>
+            <pre><code contenteditable class ="javascript">
+              const firstObject = {};
+              const secondObject = { a: 'a' };
+              const thirdObject = { b: 'b', c: 'c' };
+
+              const returnedObject = Object.assign(firstObject, secondObject, thirdObject);
+              returnedObject === firstObject; // true
+              returnedObject.a === 'a'; // true
+              returnedObject.b === 'b'; // true
+              returnedObject.c === 'c'; // true
+            </code></pre>
+          </section>
+          <section>
+            <h2>Spread operator</h2>
+            <pre><code contenteditable class ="javascript">
+              const numbers = [1, 2];
+
+              const addNumber = (x, y) => x + y;
+              add(...numbers); // 3
+
+              const newNumbers = [...numbers, 3]; // [1, 2, 3];
+            </code></pre>
+          </section>
+          <section>
+            <h2>Rest/spread Properties for</h2>
+            <h2>ECMAScript (stage 3)</h2>
+            <pre><code contenteditable class ="javascript">
+              const secondObject = { a: 'a' };
+              const thirdObject = { b: 'b', c: 'c' };
+
+              const returnedObject = { ...secondObject, ...thirdObject, d: 'd' };
+              returnedObject.a === 'a'; // true
+              returnedObject.b === 'b'; // true
+              returnedObject.c === 'c'; // true
+              returnedObject.d === 'd'; // true
+            </code></pre>
+          </section>
+        </section>
+
         <!-- Opening -->
 				<section>
 					<img src="dist/img/circle-gdi-logo.png" alt="GDI Logo" class="noborder"/>
