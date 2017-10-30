@@ -46,11 +46,11 @@
 
 		<div class="reveal">
 
-			<!-- Any section element inside of this container is displayed as a slide -->
-			<div class="slides">
-				<section>
-					<section>
-						<h2>New ECMAScript features Review</h2>
+<!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <section>
+            <h2>New ECMAScript features Review</h2>
             <ul>
               <li>Arrow functions</li>
               <li>Spread Operator</li>
@@ -119,18 +119,274 @@
             </code></pre>
           </section>
         </section>
+        <section>
+          <h2>Redux entities</h2>
+          <ol>
+            <li>Actions - describe a desired state change</li>
+            <li>Reducers - determine next state from the current state and received action</li>
+            <li>Store - stores current app state</li>
+          </ol>
+        </section>
+        <section>
+          <section>
+            <h2>Actions</h2>
+            <ul>
+              <li>Describe how state should change and include any data that may be necessary</li>
+              <li>Must contain a <code>type</code></li>
+              <li>May optionally contain a <code>payload</code></li>
+            </ul>
+          </section>
+          <section>
+            <h2>Action Examples</h2>
+            <pre><code contenteditable class ="javascript">
+            const addOneAction = {
+              type: 'ADD_ONE',
+            };
 
-        <!-- Opening -->
+            const addNumberAction = {
+              type: 'ADD_NUMBER',
+              payload: 2,
+            };
+            </code></pre>
+          </section>
+          <section>
+            <h2>Action Creators</h2>
+            <p>Makes generating actions consistent and eases creation of actions with dynamic payloads</p>
+            <pre><code contenteditable class ="javascript">
+            const addOne = () => ({
+              type: 'ADD_ONE',
+            });
+
+            const addNumber = payload => ({
+              type: 'ADD_NUMBER',
+              payload,
+            });
+            </code></pre>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>Reducers</h2>
+            <ul>
+              <li>Determine next state from the current state and received action</li>
+              <li>Must be a pure function - given the same current state and received action, the same next state must be returned</li>
+              <li>Set an initial state</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Reducer Example</h2>
+            <pre><code contenteditable class ="javascript">
+            const count = (state = 0, action) => {
+              switch(action.type) {
+                case 'ADD_ONE':
+                  return state + 1;
+                case 'ADD_NUMBER':
+                  return state + action.payload;
+                default:
+                  return state;
+              }
+            };
+            </code></pre>
+          </section>
+          <section>
+            <h2>Reducer Usage</h2>
+            <div style="display: flex;background: #333;">
+              <pre><code contenteditable class ="javascript">
+    const addOne = () => ({
+      type: 'ADD_ONE',
+    });
+
+    const addNumber = payload => ({
+      type: 'ADD_NUMBER',
+      payload,
+    });
+
+    const count = (state = 0, action) => {
+      switch(action.type) {
+        case 'ADD_ONE':
+          return state + 1;
+        case 'ADD_NUMBER':
+          return state + action.payload;
+        default:
+          return state;
+      }
+    };
+              </code></pre>
+              <pre><code contenteditable class ="javascript">
+    const initialAction = {
+      type: '@@redux/INIT',
+    };
+
+    let state = count(undefined, initialAction);
+
+    console.log(state); // state #1?
+
+    state = count(state, addOne());
+
+    console.log(state); // state #2?
+
+    state = count(state, addNumber(3));
+
+    console.log(state); // state #3?
+
+              </code></pre>
+            </div>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>Store</h2>
+            <ol>
+              <li>Single source of truth</li>
+              <li>State is read only via <code>getState</code> method</li>
+              <li>Changes to state are made with pure functions (reducers) via <code>dispatch</code> method</li>
+            </ol>
+          </section>
+          <section>
+            <h2>Store</h2>
+            <pre><code contenteditable class ="javascript">
+            // simplified version of redux createStore function
+            const createStore = reducer => {
+                let state;
+
+                const store =  {
+                  getState() {
+                    return state;
+                  },
+                  dispatch(action) {
+                    state = reducer(state, action);
+                  },
+                };
+
+                store.dispatch({ type: '@@redux/INIT' });
+
+                return store;
+            };
+
+            export default createStore;
+            </code></pre>
+          </section>
+          <section>
+            <h2>Store Usage</h2>
+            <pre><code contenteditable class ="javascript">
+            import { createStore } from 'redux';
+            import count from './count';
+            import { addOne, addNumber } from './actionCreators';
+
+            const store = createStore(count);
+
+            console.log(store.getState()); // state #1?
+
+            store.dispatch(addOne());
+
+            console.log(store.getState()); // state #2?
+
+            store.dispatch(addNumber(3));
+
+            console.log(store.getState()); // state #3?
+
+            </code></pre>
+          </section>
+        </section>
+
+        <section>
+          <h1>Redux practice</h1>
+          <a href="https://github.com/davidrf/gdi-intro-to-redux-count-reducer">https://github.com/davidrf/gdi-intro-to-redux-count-reducer</a>
+        </section>
+
+        <section>
+          <section>
+            <h2>Adding More Application Data to the Store</h2>
+            <ul>
+              <li>Generally, you want a reducer to be in charge of one specific set of data</li>
+              <li>However, Redux's <code>createStore</code> function can only receive one reducer</li>
+              <li>We can solve this by combining two reducers into one using Redux's <code>combineReducers</code> function</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Example: person reducer</h2>
+            <pre><code contenteditable class ="javascript">
+            const initialState = {
+              firstName: '',
+              lastName: '',
+            };
+            const person = (state = initialState, action) => {
+              switch(action.type) {
+                case 'SET_FIRST_NAME':
+                  return { ...state, firstName: action.payload };
+                case 'SET_LAST_NAME':
+                  return { ...state, lastName: action.payload };
+                default:
+                  return state;
+              }
+            };
+            </code></pre>
+          </section>
+          <section>
+            <h2>Desired Combined State</h2>
+            <ul>
+              <li>The <code>count</code> reducer's state is an integer such as <code>0</code></li>
+              <li>
+                The <code>person</code> reducer's state is an object such as
+                <pre><code>
+                { firstName: '', lastName: '' }
+                </code></pre>
+              </li>
+              <li>One way we can encapsulate both states is if the store's state looks like the following</li>
+            </ul>
+            <pre><code contenteditable class ="javascript">
+            {
+              count: 0,
+              person: {
+                firstName: '',
+                lastName: '',
+              },
+            }
+            </code></pre>
+          </section>
+          <section>
+            <h2>Using combineReducers</h2>
+            <pre><code contenteditable class ="javascript">
+            import count from './count';
+            import person from './person';
+            import { createStore, combineReducers } from 'redux';
+
+            const reducer = combineReducers({
+              count: count,
+              person: person,
+            });
+
+            const store = createStore(reducer);
+            store.getState();
+
+            //{
+            //  count: 0,
+            //  person: {
+            //    firstName: '',
+            //    lastName: '',
+            //  },
+            //}
+            </code></pre>
+          </section>
+        </section>
+
+        <section>
+          <h2>Additional Resources</h2>
+          <ul>
+            <li><a href="http://redux.js.org/">Official Redux Docs</a></li>
+            <li><a href="https://egghead.io/courses/getting-started-with-redux">Getting Started with Redux by Dan Abramov (Redux creator)</a></li>
+            <li><a href="https://egghead.io/courses/building-react-applications-with-idiomatic-redux">Building React Applications with Idiomatic Redux by Dan Abramov</a></li>
+          </ul>
+        </section>
+
 				<section>
-					<img src="dist/img/circle-gdi-logo.png" alt="GDI Logo" class="noborder"/>
-					<h1>GDI Reveal.js</h1>
-					<h2>Girl Develop It's Framework for HTML Presentations</h2>
-					<p>
-						<small>Found at <a href ="https://github.com/girldevelopit/gdi-slides-template">Girl Develop It reveal.js fork</a>.</small>
-					</p>
-					<p>
-						<small>Original Created by <a href="http://hakim.se">Hakim El Hattab</a> / <a href="http://twitter.com/hakimel">@hakimel</a></small>
-					</p>
+					<h2>Marvelous Unordered List</h2>
+					<ul>
+						<li>No order here</li>
+						<li>Or here</li>
+						<li>Or here</li>
+						<li>Or here</li>
+					</ul>
 				</section>
         <!-- Compatibility-->
 				<section>
