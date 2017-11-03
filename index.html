@@ -297,15 +297,23 @@
         <section>
           <section>
             <h2>Adding More Application Data to the Store</h2>
-            <ul>
-              <li>Generally, you want a reducer to be in charge of one specific set of data</li>
-              <li>However, Redux's <code>createStore</code> function can only receive one reducer</li>
-              <li>We can solve this by combining two reducers into one using Redux's <code>combineReducers</code> function</li>
-            </ul>
+            <p>What will your state look like if you want to store a user's information which includes their first name and last name in addition to the count?</p>
+          </section>
+          <section>
+            <h2>Sample Store Data With Count And User Data</h2>
+            <pre><code contenteditable class="json">
+            {
+              count: 0,
+              user: {
+                firstName: '',
+                lastName: ''
+              }
+            }
+            </code></pre>
           </section>
           <section>
             <h2>Example: person reducer</h2>
-            <pre><code contenteditable class ="javascript">
+            <pre><code contenteditable class="javascript">
             const initialState = {
               firstName: '',
               lastName: '',
@@ -323,49 +331,46 @@
             </code></pre>
           </section>
           <section>
-            <h2>Desired Combined State</h2>
+            <h2>Combining Reducers</h2>
             <ul>
-              <li>The <code>count</code> reducer's state is an integer such as <code>0</code></li>
-              <li>
-                The <code>person</code> reducer's state is an object such as
-                <pre><code>
-                { firstName: '', lastName: '' }
-                </code></pre>
-              </li>
-              <li>One way we can encapsulate both states is if the store's state looks like the following</li>
+              <li>You want a reducer to be in charge of a slice of the data</li>
+              <li class="fragment">However, Redux's <code>createStore</code> function only takes one reducer</li>
             </ul>
-            <pre><code contenteditable class ="javascript">
-            {
-              count: 0,
-              person: {
-                firstName: '',
-                lastName: '',
-              },
-            }
+            <pre class="fragment"><code contenteditable class="javascript">
+            import count from './count';
+            import person from './person';
+
+            const rootReducer = (state = {}, action) => {
+              return {
+                count: count(state.count, action),
+                person: person(state.person, action),
+              };
+            };
+
+            export default rootReducer;
             </code></pre>
           </section>
           <section>
-            <h2>Using combineReducers</h2>
-            <pre><code contenteditable class ="javascript">
+            <h2>Using Redux's <code>combineReducdrs</code></h2>
+
+            <pre><code contenteditable class="javascript">
             import count from './count';
             import person from './person';
-            import { createStore, combineReducers } from 'redux';
-
-            const reducer = combineReducers({
+            import { combineReducers } from 'redux';
+            /*
+            const rootReducer = (state = {}, action) => {
+              return {
+                count: count(state.count, action),
+                person: person(state.person, action),
+              };
+            };
+            */
+            const rootReducer = combineReducers({
               count: count,
               person: person,
             });
 
-            const store = createStore(reducer);
-            store.getState();
-
-            //{
-            //  count: 0,
-            //  person: {
-            //    firstName: '',
-            //    lastName: '',
-            //  },
-            //}
+            export default rootReducer;
             </code></pre>
           </section>
         </section>
