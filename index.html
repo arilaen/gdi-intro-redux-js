@@ -49,6 +49,16 @@
 <!-- Any section element inside of this container is displayed as a slide -->
       <div class="slides">
         <section>
+          <h2>Table of contents</h2>
+          <ol>
+            <li><a href="#/1">First Session - Introduction to Redux</a></li>
+            <li><a href="#/9">Second Session - Redux and React</a></li>
+            <li><a href="#/3">Third Session - Advanced Redux Concepts</a></li>
+            <li><a href="#/4">Fourth Session - Build Your Own Redux App</a></li>
+          </ol>
+        </section>
+
+        <section>
           <section>
             <h2>New ECMAScript features Review</h2>
             <ul>
@@ -376,13 +386,216 @@
         </section>
 
         <section>
-          <h2>Additional Resources</h2>
+          <section>
+            <h2>Immutable Data Management</h2>
+            <ul>
+              <li>Redux employs shallow equality checking in <code>combineReducers</code> for optimization purposes</li>
+              <li>Immutable data management ultimately makes data handling safer</li>
+              <li>Immutability allows undo and time-travel debugging functionality to be easily implemented</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Updating Lists</h2>
+
+            <pre><code contenteditable class="javascript">
+            // example action
+            // { type: 'ADD_FAVORITE_BOOK', payload: 'Harry Potter' }
+
+            const favoriteBooks = (state = [], action) => {
+              switch(action.type) {
+                // INCORRECT WAY
+                // case 'ADD_FAVORITE_BOOK':
+                //  return state.push(action.payload);
+
+                // CORRECT WAY
+                case 'ADD_FAVORITE_BOOK':
+                  return [...state, action.payload];
+                default:
+                  return state;
+              }
+            };
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Updating Objects</h2>
+
+            <pre><code contenteditable class="javascript">
+            // example action
+            // { type: 'SET_FIRST_NAME', payload: 'Marcela' }
+
+            const person = (state = { firstName: '' }, action) => {
+              switch(action.type) {
+                // INCORRECT WAY
+                // case 'SET_FIRST_NAME':
+                //  state.firstName = action.payload;
+                //  return state;
+
+                // CORRECT
+                case 'SET_FIRST_NAME':
+                  return { ...state, firstName: action.payload };
+                default:
+                  return state;
+              }
+            };
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Additional Immutability Resources</h2>
+            <ul>
+              <li><a href="http://redux.js.org/docs/faq/ImmutableData.html">Redux FAQ: Immutable Data</a></li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <h2>Additional Redux Resources</h2>
           <ul>
             <li><a href="http://redux.js.org/">Official Redux Docs</a></li>
             <li><a href="https://egghead.io/courses/getting-started-with-redux">Getting Started with Redux by Dan Abramov (Redux creator)</a></li>
             <li><a href="https://egghead.io/courses/building-react-applications-with-idiomatic-redux">Building React Applications with Idiomatic Redux by Dan Abramov</a></li>
           </ul>
         </section>
+
+        <section>
+          <section>
+            <h2>React Review</h2>
+            <ol>
+              <li>Functional components</li>
+              <li>Container components</li>
+            </ol>
+          </section>
+
+          <section>
+            <h2>Functional Component Example</h2>
+
+            <pre><code contenteditable class="javascript">
+            import React from 'react';
+            import { render } from 'react-dom';
+            import Hello from './Hello';
+
+            const Hello = ({ name }) =&gt; &lt;h1&gt;Hello {name}!&lt;/h1&gt;;
+
+            const App = () =&gt; (
+              &lt;div &gt;
+                &lt;Hello name="CodeSandbox" /&gt;
+                &lt;h2&gt;Start editing to see some magic happen {'\u2728'}&lt;/h2&gt;
+              &lt;/div&gt;
+            );
+
+            render(&lt;App /&gt;, document.getElementById('root'));
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Container Component Example</h2>
+
+            <pre><code contenteditable class="javascript">
+            import React, { Component } from "react";
+            import { render } from "react-dom";
+            import Hello from "./Hello";
+
+            class App extends Component {
+              state = {
+                list: [],
+                nameInput: ""
+              };
+
+              onChangeInput = event => this.setState({ nameInput: event.target.value });
+
+              onClickButton = () => {
+                const { list, nameInput } = this.state;
+                const nextList = [...list, nameInput];
+                this.setState({ list: nextList });
+              };
+
+              render() {
+                const { list, nameInput } = this.state;
+
+                return (
+                  &lt;div&gt;
+                    &lt;h1&gt;{this.props.name}&lt;/h1&gt;
+                    &lt;input onChange={this.onChangeInput} value={nameInput} /&gt;
+                    &lt;button onClick={this.onClickButton}&gt;Add Item&lt;/button&gt;
+                    &lt;ul&gt;{list.map(name =&gt; &lt;li key={name}&gt;{name}&lt;/li&gt;)}&lt;/ul&gt;
+                  &lt;/div&gt;
+                );
+              }
+            }
+            render(&lt;App name="Grocery List" /&gt;, document.getElementById("root"));
+            </code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>What is <code>connect</code>?</h2>
+            <p>
+              Answer: It is a higher-order component (HOC)
+            </p>
+            <q cite="https://reactjs.org/docs/higher-order-components.html">
+              A higher-order component is a function that takes a component and returns a new component
+            </q>
+          </section>
+
+          <section>
+            <h2>Higher-order function</h2>
+            <p>A higher-order function is a function that does one or both of the following</p>
+            <ol>
+              <li>Receives a function as an argument</li>
+              <li>Returns a function</li>
+            </ol>
+
+            <pre><code contenteditable class="javascript">
+            const addOne = x =&gt; x + 1;
+            const addTwo = x =&gt; x + 2;
+
+            // Can create these functions with a higher-order function addX
+            const addY = y =&gt; x =&gt; x + y;
+
+            // same functionality as before
+            const addOne = addY(1);
+            const addTwo = addY(2);
+
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Higher-order component example</h2>
+
+            <p>A higher-order component is a kind of higher-order function because returns a component which is a function.</p>
+
+            <pre><code contenteditable class="javascript">
+            const ViewProps = props => <pre>{JSON.stringify(props, null, 2)}</pre>;
+
+            const withNextCount = count => WrapperComponent => props => {
+              const additionalProps = {
+                nextCount: count + 1,
+              };
+              return &lt;WrapperComponent {...additionalProps} {...props} /&gt;;
+            };
+
+            const ViewPropsEnhanced = withNextCount(1)(ViewProps);
+
+            render(
+              &lt;ViewPropsEnhanced firstName="David" /&gt;,
+              document.getElementById('root')
+            );
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Resources To Learn More About HOCs</h2>
+            <ul>
+              <li><a href="https://reactjs.org/docs/higher-order-components.html">React docs - Higher-Order Components Guide</a></li>
+              <li><a href="https://www.youtube.com/watch?v=qJgff2spvzM">Nik Graf's 2017 React Europe Talk</a></li>
+            </ul>
+          </section>
+        </section>
+
+
 
 				<section>
 					<h2>Marvelous Unordered List</h2>
