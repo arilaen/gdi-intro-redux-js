@@ -49,13 +49,146 @@
 <!-- Any section element inside of this container is displayed as a slide -->
       <div class="slides">
         <section>
+          <img src="dist/img/circle-gdi-logo.png" alt="GDI Logo" class="noborder"/>
+          <h1>Introduction to Redux</h1>
+          <p>
+            <small>Found at <a href ="https://github.com/arilaen/gdi-intro-redux-js">github</a>.</small>
+          </p>
+          <p>
+            <small>David Rodriguez Fuentes/ <a href="http://linkedin.com/in/davidrfdeveloper">linkedin</a></small>
+            <small>Marcela Rodriguez / <a href="http://twitter.com/arilaen">@arilaen</a></small>
+          </p>
+        </section>
+
+        <section>
+          <section>
+            <h2>Heads Up</h2>
+            <p>
+              Girl Develop It is here to provide affordable and accessible programs to learn software through mentorship and hands-on instruction.</p>
+            <p class="green">Some "rules"</p>
+            <ul>
+                <li>We are here for you!</li>
+                <li>Every question is important</li>
+                <li>Help each other</li>
+                <li>Have fun</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Introductions</h2>
+            <h3>Tell us about yourself.</h3>
+            <p>Which of your web projects are you most proud of?</p>
+            <ul>
+              <li>Who are you?</li>
+              <li>What do you hope to get out of the class?</li>
+              <li>If you could make any website, what would it be?</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Prerequisites</h2>
+            <ul>
+              <li>Javascript</li>
+              <li>ES6 (will cover the basics here)</li>
+              <li>HTML/CSS</li>
+              <li>Recommended: Experience with React or another frontend framework</li>
+            </ul>
+          </section>
+          <section>
+            <h2>You should have:</h2>
+            <ul>
+                <li>A <a href="https://codepen.io">Codepen account</a></li>
+                <li>A text editor (<a href="https://atom.io">Atom</a>, <a href="https://sublimetext.com">Sublime Text</a>)</li>
+                <li><a href=""><a href="https://git-scm.com/">Git</a> (usually already installed)</a>
+                <li><a href="https://www.npmjs.com/">npm</a> <a href="https://github.com/creationix/nvm">(nvm recommended)</a></li>
+                <li>Google Chrome with <a href="https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd">Redux DevTools</a></li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
           <h2>Table of contents</h2>
           <ol>
-            <li><a href="#/1">First Session - Introduction to Redux</a></li>
-            <li><a href="#/9">Second Session - Redux and React</a></li>
+            <li><a href="#/6">First Session - Introduction to Redux</a></li>
+            <li><a href="#/2">Second Session - Redux and React</a></li>
             <li><a href="#/3">Third Session - Advanced Redux Concepts</a></li>
             <li><a href="#/4">Fourth Session - Build Your Own Redux App</a></li>
           </ol>
+        </section>
+
+        <section>
+          <section>
+            <h2>What is Redux?</h2>
+            <ul>
+              <li>"Single immutable state tree" - Dan Abramov</li>
+              <ul>
+                <li><strong>Single</strong>: One source of truth</li>
+                <li><strong>Immutable</strong>: State is never mutated</li>
+                <li><strong>State tree</strong>: Can handle different parts of state in specific ways</li>
+              </ul>
+              <li>Predictable way to handle data changes</li>
+              <li>Flux implementation</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Why Redux?</h2>
+            <ul>
+              <li>Managing state in complex apps is difficult</li>
+              <li>When a user changes data, unanticipated scenarios can easily lead to errors</li>
+              <li>Flux was originally created for React to address this problem at Facebook, but does not require a <strong>single, immutable</strong> state</li>
+            </ul>
+          </section>
+
+          <section>
+            <h1>Redux architecture</h1>
+            <img src="./redux-flow.png" style="border: none; box-shadow:none;" />
+          </section>
+
+          <section>
+            <h2><a href="http://redux.js.org/docs/introduction/ThreePrinciples.html">Three principles of Redux</a></h2>
+            <ul>
+              <li>Single source of truth</li>
+              <li>Read-only state</li>
+              <li>Pure functions</li>
+            </ul>
+            <p>These are summed up by describing Redux as a "single immutable state tree".</p>
+          </section>
+
+          <section>
+            <h2>What is a pure function?</h2>
+            <ul>
+              <li>Does not mutate any of its arguments</li>
+              <li>-- A pure function that changes state would only return a new state, without changing the old one.</li>
+              <li>Does not have any side effects</li>
+              <li>-- Side effects are changes outside of the function, including database updates and HTTP requests.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Redux makes state changes...</h2>
+            <ul>
+              <li>Predictable: you need to define every way your state can change</li>
+              <li>Less bug prone</li>
+              <li>Self documenting: you'll have a list of all possible state changes</li>
+              <li>Reversible for debugging: Instead of changing your state, you'll have a history of states, and can time travel!</li>
+            </ul>
+            <img src="http://www.digitaljournal.com/img/8/9/9/i/5/4/5/o/DocWho.jpg" />
+          </section>
+
+          <section>
+            <h2>Redux in a nutshell</h2>
+            <ul>
+              <li>Scales well</li>
+              <li>Predictable</li>
+              <li>Great debugging tools (like time travel!)</li>
+              <li>Framework agnostic</li>
+              <li>Overkill for very small or static sites</li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <h2>Before diving into Redux...</h2>
+          <p>Let's review some important new features in Javascript!</p>
         </section>
 
         <section>
@@ -68,6 +201,7 @@
               <li>Object Rest/Spread Properties for ECMAScript (Stage 3)</li>
             </ul>
           </section>
+
           <section>
             <h2>Arrow function</h2>
             <pre><code contenteditable class ="javascript">
@@ -89,6 +223,7 @@
               instructor.sayNameArrow(); // 'Window Name'
             </code></pre>
           </section>
+
           <section>
             <h2>Object.assign</h2>
             <pre><code contenteditable class ="javascript">
@@ -129,6 +264,7 @@
             </code></pre>
           </section>
         </section>
+
         <section>
           <h2>Redux entities</h2>
           <ol>
@@ -361,7 +497,7 @@
             </code></pre>
           </section>
           <section>
-            <h2>Using Redux's <code>combineReducdrs</code></h2>
+            <h2>Using Redux's <code>combineReducers</code></h2>
 
             <pre><code contenteditable class="javascript">
             import count from './count';
@@ -451,6 +587,21 @@
         </section>
 
         <section>
+          <h2>Let's practice using Redux on Codepen!</h2>
+          <p><a href="https://codepen.io/arilaen/pen/zPqvNe">https://codepen.io/arilaen/pen/zPqvNe</a></p>
+        </section>
+
+        <section>
+          <h2>Local environment setup</h2>
+          <ol>
+            <li>Install create-react-app tool: <code>npm i -g create-react-app</code></li>
+            <li>Create a new app: <code>create-react-app gdi-redux;cd gdi-redux</code></li>
+            <li>Install Redux and react-redux (which we'll cover soon!): <code>npm install redux react-redux --save</code></li>
+            <li>Try using Redux in src/index.js</li>
+          </ol>
+        </section>
+
+        <section>
           <h2>Additional Redux Resources</h2>
           <ul>
             <li><a href="http://redux.js.org/">Official Redux Docs</a></li>
@@ -466,6 +617,15 @@
               <li>Functional components</li>
               <li>Container components</li>
             </ol>
+          </section>
+
+          <section>
+            <h2>When to use each type of component?</h2>
+            <ul>
+              <li>Functional components are UI-only, and do not need to access state</li>
+              <li> -> Therefore they can be expressed as single render functions.</li>
+              <li>Container components handle state, and use the class-based pattern, which includes the render function and anything else that is required</li>
+            </ul>
           </section>
 
           <section>
@@ -526,6 +686,55 @@
             }
             render(&lt;App name="Grocery List" /&gt;, document.getElementById("root"));
             </code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Day 1 Review</h2>
+            <ul>
+              <li>What is Redux?</li>
+              <li>ES6</li>
+              <li>Actions, Reducers, State</li>
+              <li>Finishing local setup</li>
+            </ul>
+          </section>
+          <section>
+            <h2>What is Redux?</h2>
+            <ul>
+              <li>"Single immutable state tree"</li>
+              <li>Predictable</li>
+              <li>Framework agnostic</li>
+              <li>Allows features like time travel</li>
+              <li><a href="/#/3/2">Redux flow</a></li>
+            </ul>
+          </section>
+          <section>
+            <h2>ES6 Features</h2>
+            <ul>
+              <li>Arrow functions</li>
+              <li>Object.assign</li>
+              <li>Rest/spread functions</li>
+            </ul>
+            <p>Codepen practice: <a href="https://codepen.io/arilaen/pen/qVNdvJ?editors=0010">https://codepen.io/arilaen/pen/qVNdvJ?editors=0010</a></p>
+          </section>
+          <section>
+            <h2>What entities do we use in Redux?</h2>
+            <ul>
+              <li>Actions</li>
+              <li>Reducers</li>
+              <li>State</li>
+              <p>Codepen: <a href="https://codepen.io/arilaen/pen/zPqvNe">https://codepen.io/arilaen/pen/zPqvNe</a><p>
+            </ul>
+          </section>
+          <section>
+            <h2>Local environment setup</h2>
+            <ol>
+              <li>Install create-react-app tool: <code>npm i -g create-react-app</code></li>
+              <li>Create a new app: <code>create-react-app gdi-redux;cd gdi-redux</code></li>
+              <li>Install Redux and react-redux (which we'll cover soon!): <code>npm install redux react-redux --save</code></li>
+              <li>Try using Redux in src/index.js</li>
+            </ol>
           </section>
         </section>
 
@@ -595,581 +804,285 @@
           </section>
         </section>
 
+      <section>
         <section>
-          <section>
-            <h2>Normalizing Data</h2>
-            <p>How would you handle adding the following API response data to your redux store?</p>
-            <pre><code contenteditable class="json">
-              {
-                "events": [
-                  {
-                    "id": 1,
-                    "name": "Introduction To React",
-                    "students": [
-                      { "id": 1, "name": "Eager Student 1" },
-                      { "id": 2, "name": "Eager Student 2" }
-                    ]
-                  },
-                  {
-                    "id": 2,
-                    "name": "Introduction To Redux",
-                    "students": [
-                      { "id": 1, "name": "Eager Student 1" },
-                      { "id": 3, "name": "Eager Student 3" }
-                    ]
-                  },
-                ]
-              }
+          <h2>Normalizing Data</h2>
+          <p>How would you handle adding the following API response data to your redux store?</p>
+          <pre><code contenteditable class="json">
+            {
+              "events": [
+                {
+                  "id": 1,
+                  "name": "Introduction To React",
+                  "students": [
+                    { "id": 1, "name": "Eager Student 1" },
+                    { "id": 2, "name": "Eager Student 2" }
+                  ]
+                },
+                {
+                  "id": 2,
+                  "name": "Introduction To Redux",
+                  "students": [
+                    { "id": 1, "name": "Eager Student 1" },
+                    { "id": 3, "name": "Eager Student 3" }
+                  ]
+                },
+              ]
+            }
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Problems With Nested Data</h2>
+          <ul>
+            <li>Harder to update if there is duplicate data</li>
+            <li>Reducer logic becomes more complex</li>
+            <li>Can trigger unnecessary renders</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Normalizing data with <code>normalizr</code></h2>
+
+          <div style="display: flex;background: #333;">
+            <pre><code contenteditable class ="javascript">
+  {
+    "classes": [
+      {
+        "id": 1,
+        "name": "Introduction To React",
+        "students": [
+          { "id": 1, "name": "Eager Student 1" },
+          { "id": 2, "name": "Eager Student 2" }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Introduction To Redux",
+        "students": [
+          { "id": 1, "name": "Eager Student 1" },
+          { "id": 3, "name": "Eager Student 3" }
+        ]
+      },
+    ]
+  }
             </code></pre>
-          </section>
-
-          <section>
-            <h2>Problems With Nested Data</h2>
-            <ul>
-              <li>Harder to update if there is duplicate data</li>
-              <li>Reducer logic becomes more complex</li>
-              <li>Can trigger unnecessary renders</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2>Normalizing data with <code>normalizr</code></h2>
-
-            <div style="display: flex;background: #333;">
-              <pre><code contenteditable class ="javascript">
-    {
-      "classes": [
-        {
+            <pre><code contenteditable class="javascript">
+  {
+    "entities": {
+      "users": {
+        1: {
           "id": 1,
-          "name": "Introduction To React",
-          "students": [
-            { "id": 1, "name": "Eager Student 1" },
-            { "id": 2, "name": "Eager Student 2" }
-          ]
+          "name": "Eager Student 1"
         },
-        {
+        2: {
           "id": 2,
-          "name": "Introduction To Redux",
-          "students": [
-            { "id": 1, "name": "Eager Student 1" },
-            { "id": 3, "name": "Eager Student 3" }
-          ]
+          "name": "Eager Student 2"
         },
-      ]
-    }
-              </code></pre>
-              <pre><code contenteditable class="javascript">
-    {
-      "entities": {
-        "users": {
-          1: {
-            "id": 1,
-            "name": "Eager Student 1"
-          },
-          2: {
-            "id": 2,
-            "name": "Eager Student 2"
-          },
-          3: {
-            "id": 3,
-            "name": "Eager Student 3"
-          }
-        },
-        "events": {
-          1: {
-            "id": 1,
-            "name": "Introduction To React",
-            "users": [
-              1,
-              2
-            ]
-          },
-          2: {
-            "id": 2,
-            "name": "Introduction To Redux",
-            "users": [
-              1,
-              3
-            ]
-          }
+        3: {
+          "id": 3,
+          "name": "Eager Student 3"
         }
       },
-      "result": {
-        "events": [
-          1,
-          2
-        ]
+      "events": {
+        1: {
+          "id": 1,
+          "name": "Introduction To React",
+          "users": [
+            1,
+            2
+          ]
+        },
+        2: {
+          "id": 2,
+          "name": "Introduction To Redux",
+          "users": [
+            1,
+            3
+          ]
+        }
       }
+    },
+    "result": {
+      "events": [
+        1,
+        2
+      ]
     }
-              </code></pre>
-            </div>
-          </section>
+  }
+            </code></pre>
+          </div>
+        </section>
 
-          <section>
-            <h2>Using <code>normalizr</code></h2>
+        <section>
+          <h2>Using <code>normalizr</code></h2>
+          <pre><code contenteditable class="javascript">
+        import { normalize, schema } from 'normalizr';
 
-            <pre><code contenteditable class="javascript">
-          import { normalize, schema } from 'normalizr';
+        const data = {
+          "events": [
+            {
+              "id": 1,
+              "name": "Introduction To React",
+              "users": [
+                { "id": 1, "name": "Eager Student 1" },
+                { "id": 2, "name": "Eager Student 2" }
+              ]
+            }
+          ]
+        }
+        const user = new schema.Entity('users');
+        const event = new schema.Entity('events', { users: [user]});
+        const normalizedData = normalize(data, { events: [event] })
+        // dispatch FETCH_EVENTS_REQUEST_SUCCESS action with normalizedData as payload
+          </code></pre>
+        </section>
 
-          const data = {
-            "events": [
-              {
-                "id": 1,
-                "name": "Introduction To React",
-                "users": [
-                  { "id": 1, "name": "Eager Student 1" },
-                  { "id": 2, "name": "Eager Student 2" }
-                ]
+        <section>
+          <h2>Incorporating Normalized Data - users reducer</h2>
+
+          <pre><code contenteditable class="javascript">
+            import { combineReducers } from 'redux';
+
+            const initialState = {
+              byId: {},
+            };
+
+            const byId = (state = initialState.byId, action) =&gt; {
+              switch (action.type) {
+                case 'FETCH_EVENTS_REQUEST_SUCCESS':
+                  // action.payload is the normalized data
+                  return { ...state, action.payload.entities.users };
+                default:
+                  return state
               }
-            ]
-          }
-          const user = new schema.Entity('users');
-          const event = new schema.Entity('events', { users: [user]});
-          const normalizedData = normalize(data, { events: [event] })
-          // dispatch FETCH_EVENTS_REQUEST_SUCCESS action with normalizedData as payload
-            </code></pre>
-          </section>
+            });
 
-          <section>
-            <h2>Incorporating Normalized Data - users reducer</h2>
+            const users = combineReducers({
+              byId,
+            });
 
-            <pre><code contenteditable class="javascript">
-              import { combineReducers } from 'redux';
-
-              const initialState = {
-                byId: {},
-              };
-
-              const byId = (state = initialState.byId, action) =&gt; {
-                switch (action.type) {
-                  case 'FETCH_EVENTS_REQUEST_SUCCESS':
-                    // action.payload is the normalized data
-                    return { ...state, action.payload.entities.users };
-                  default:
-                    return state
-                }
-              });
-
-              const users = combineReducers({
-                byId,
-              });
-
-              export default users;
-            </code></pre>
-          </section>
-
-          <section>
-            <h2>Incorporating Normalized Data - events reducer</h2>
-
-            <pre><code contenteditable class="javascript">
-              import { combineReducers } from 'redux';
-
-              const initialState = {
-                byId: {},
-                indexIds: [],
-              };
-
-              const byId = (state = initialState.byId, action) =&gt; {
-                switch (action.type) {
-                  case 'FETCH_EVENTS_REQUEST_SUCCESS':
-                    // action.payload is the normalized data
-                    return { ...state, action.payload.entities.events };
-                  default:
-                    return state
-                }
-              });
-
-              const indexIds = (state = initialState.indexIds, action) =&gt; {
-                switch (action.type) {
-                  case 'FETCH_EVENTS_REQUEST_SUCCESS':
-                    // action.payload is the normalized data
-                    return [...state, action.payload.result.events];
-                  default:
-                    return state
-                }
-              });
-
-              const users = combineReducers({
-                byId,
-                indexIds,
-              });
-
-              export default events;
-            </code></pre>
-          </section>
-
-          <section>
-            <h2>Creating the root reducer from events reducer and users reducer</h2>
-
-            <pre><code contenteditable class="javascript">
-              import { combineReducers } from 'redux';
-              import events from './events';
-              import users from './users';
-
-              export default combineReducers({
-                events,
-                users,
-              });
-            </code></pre>
-          </section>
+            export default users;
+          </code></pre>
         </section>
 
         <section>
-          <section>
-            <h2>Querying Normalized Data</h2>
-            <ul>
-              <li>How do we get a specific resource?</li>
-              <li>How do we get a list of resources?</li>
-            </ul>
-          </section>
+          <h2>Incorporating Normalized Data - events reducer</h2>
 
-          <section>
-            <h2>Getting a specific event</h2>
+          <pre><code contenteditable class="javascript">
+            import { combineReducers } from 'redux';
+
+            const initialState = {
+              byId: {},
+              indexIds: [],
+            };
+
+            const byId = (state = initialState.byId, action) =&gt; {
+              switch (action.type) {
+                case 'FETCH_EVENTS_REQUEST_SUCCESS':
+                  // action.payload is the normalized data
+                  return { ...state, action.payload.entities.events };
+                default:
+                  return state
+              }
+            });
+
+            const indexIds = (state = initialState.indexIds, action) =&gt; {
+              switch (action.type) {
+                case 'FETCH_EVENTS_REQUEST_SUCCESS':
+                  // action.payload is the normalized data
+                  return [...state, action.payload.result.events];
+                default:
+                  return state
+              }
+            });
+
+            const users = combineReducers({
+              byId,
+              indexIds,
+            });
+
+            export default events;
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Creating the root reducer from events reducer and users reducer</h2>
+
+          <pre><code contenteditable class="javascript">
+            import { combineReducers } from 'redux';
+            import events from './events';
+            import users from './users';
+
+            export default combineReducers({
+              events,
+              users,
+            });
+          </code></pre>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h2>Querying Normalized Data</h2>
+          <ul>
+            <li>How do we get a specific resource?</li>
+            <li>How do we get a list of resources?</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Getting a specific event</h2>
+
+          <pre><code contenteditable class="javascript">
+            const mapStateToProps = (state, props) =&gt; ({
+              event: state.events.byId[props.eventId],
+            });
+          </code></pre>
+
+          <div class="fragment">
+            <p>Can clean up <code>mapStateToProps</code> by creating a selector function</p>
 
             <pre><code contenteditable class="javascript">
-              const mapStateToProps = (state, props) =&gt; ({
-                event: state.events.byId[props.eventId],
-              });
-            </code></pre>
+              const event = (state, props) =&gt; {
+                const { byId } = state.events;
+                const { eventId } = props;
 
-            <div class="fragment">
-              <p>Can clean up <code>mapStateToProps</code> by creating a selector function</p>
-
-              <pre><code contenteditable class="javascript">
-                const event = (state, props) =&gt; {
-                  const { byId } = state.events;
-                  const { eventId } = props;
-
-                  return byId[eventId];
-                };
-
-                const mapStateToProps = (state, props) =&gt; ({
-                  event: event(state, props),
-                });
-              </code></pre>
-            </div>
-          </section>
-
-          <section>
-            <h2>Getting a list of events</h2>
-
-            <pre><code contenteditable class="javascript">
-              const events = state =&gt; {
-                const { byId, indexIds } = state.events;
-                return indexIds.map(id =&gt; byId[id]);
+                return byId[eventId];
               };
 
               const mapStateToProps = (state, props) =&gt; ({
-                events: events(state),
+                event: event(state, props),
               });
             </code></pre>
-          </section>
+          </div>
         </section>
 
-				<section>
-					<h2>Marvelous Unordered List</h2>
-					<ul>
-						<li>No order here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-					</ul>
-				</section>
-        <!-- Compatibility-->
-				<section>
-					<h2>Heads Up</h2>
-					<p>
-						reveal.js is a framework for easily creating beautiful presentations using HTML. You'll need a browser with
-						support for CSS 3D transforms to see it in its full glory.</p>
-
-						<p>We highly recommend using Chrome, currently, however, the latest version of Safari, mobile Safari (iPad), Firefox and IE9 will work.
-					</p>
-				</section>
-
-				<section>
-					<h2>Works in Mobile Safari</h2>
-					<p>
-						Try it out! You can swipe through the slides and pinch your way to the overview.
-					</p>
-				</section>
-
-				<!-- Examples of basic html based slides -->
-				<section>
-					<h2>Marvelous Unordered List</h2>
-					<ul>
-						<li>No order here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-					</ul>
-				</section>
-
-				<section>
-					<h2>Fantastic Ordered List</h2>
-					<ol>
-						<li>One is smaller than...</li>
-						<li>Two is smaller than...</li>
-						<li>Three!</li>
-					</ol>
-				</section>
-
-                <section>
-					<h2>Speaker View</h2>
-					<p>There's a <a href="https://github.com/hakimel/reveal.js#speaker-notes">speaker view</a>. It includes a timer, preview of the upcoming slide as well as your speaker notes.</p>
-					<p>Press the <em>S</em> key to try it out.</p>
-					<p>P.S. This won't work when running the slides locally unless you run reveal.js from a local web server (<a href="https://github.com/girldevelopit/gdi-slides-template/wiki#compiling-slides-and-running-locally" target="_blank">learn how</a>).</p>
-
-					<aside class="notes">
-						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
-					</aside>
-				</section>
-
-				<!-- Examples of code slides-->
-				<section>
-					  <h2>But wait! We teach code</h2>
-					  <p>For HTML -- Surround your code pre, then code class "xml".</p>
-<pre><code class="xml">&lt;ul class="demo"&gt;
-  &lt;li&gt;No order here&lt;/li&gt;
-  &lt;li&gt;Or here&lt;/li&gt;
-  &lt;li&gt;Or here&lt;/li&gt;
-  &lt;li&gt;Or here&lt;/li&gt;
-&lt;/ul&gt;
-</code></pre>
-				</section>
-
-				<section>
-					  <h2>But wait! We teach code</h2>
-					  <p>We can also make code editable</p>
-<pre><code contenteditable class="xml">&lt;ul class="demo"&gt;
-  &lt;li&gt;No order here&lt;/li&gt;
-  &lt;li&gt;Or here&lt;/li&gt;
-  &lt;li&gt;Or here&lt;/li&gt;
-  &lt;li&gt;Or here&lt;/li&gt;
-&lt;/ul&gt;
-</code></pre>
-				</section>
-
-
-				<section>
-					  <h2>But wait! We teach code</h2>
-					  <p>CSS</p>
-<pre><code contenteditable class ="css">body{
-  background-color: #ffffff;
-}
-</code></pre>
-				</section>
-
-				<section>
-					  <h2>But wait! We teach code</h2>
-					  <p>Javascript</p>
-<pre><code contenteditable class ="javascript">function helloWorld(){
-  var name = 'GDI';
-  alert("Hi, " + name)
-}
-</code></pre>
-				</section>
-
-				<section>
-					  <h2>But wait! We teach code</h2>
-					  <p>PHP</p>
-<pre><code contenteditable class ="php">function helloWorld(){
-  $name = 'GDI';
-  echo "Hi, " . $name;
-}
-</code></pre>
-				</section>
-
-				<section>
-					  <h2>But wait! We teach code</h2>
-<p>Ruby</p><pre><code contenteditable class ="ruby">def hello_world
-  @name = 'GDI'
-  puts "Hi, #{@name}"
-end
-</code></pre>
-				</section>
-
-         <section>
- 					  <h2>But wait! We teach code</h2>
- 					  <p>Python</p>
-<pre><code contenteditable class ="python">def hello_world():
-  name = "GDI"
-  print 'Hi, ' + name
-  return
-</code></pre>
- 				</section>
-
- 				 <section>
- 					  <h2>But wait! We teach code</h2>
- 					  <p>Java</p>
-<pre><code contenteditable class ="java">public void helloWorld(){
-  String name = "GDI";
-  System.out.println("Hi," + name)
-}
-</code></pre>
- 				</section>
-
-
-        <!-- Elements entering one at a time-->
         <section>
-					<section>
-						<h2>Fragmented Views</h2>
-						<p>Hit the next arrow...</p>
-						<p class="fragment">... to step through ...</p>
-						<ol>
-							<li class="fragment"><code>any type</code></li>
-							<li class="fragment"><em>of view</em></li>
-							<li class="fragment"><strong>fragments</strong></li>
-						</ol>
+          <h2>Getting a list of events</h2>
 
-						<aside class="notes">
-							This slide has fragments which are also stepped through in the notes window.
-						</aside>
-					</section>
-					<section>
-						<h2>Fragment Styles</h2>
-						<p>There's a few styles of fragments, like:</p>
-						<p class="fragment grow">grow</p>
-						<p class="fragment shrink">shrink</p>
-						<p class="fragment roll-in">roll-in</p>
-						<p class="fragment fade-out">fade-out</p>
-						<p class="fragment highlight-red">highlight-red</p>
-						<p class="fragment highlight-green">highlight-green</p>
-						<p class="fragment highlight-blue">highlight-blue</p>
-					</section>
-				</section>
-				<!-- Example of nested vertical slides -->
-				<section>
-					<section>
-						<h2>Vertical Slides</h2>
-						<p>
-							Slides can be nested inside of other slides,
-							try pressing <a href="#/14/1">down</a>.
-						</p>
-						<a href="#/14/1" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 1</h2>
-						<p>Press down or up to navigate.</p>
-						<a href="#/14/2" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow"></a>
-						<a href="#/14" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 2</h2>
-						<a href="#/14/3" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow"></a>
-						<a href="#/14/1" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 3</h2>
-						<p>That's it, time to go back up.</p>
-						<a href="#/14" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
-						</a>
-					</section>
-				</section>
+          <pre><code contenteditable class="javascript">
+            const events = state =&gt; {
+              const { byId, indexIds } = state.events;
+              return indexIds.map(id =&gt; byId[id]);
+            };
 
-
-				<section>
-					<h2>Point of View</h2>
-					<p>
-						Press <strong>ESC</strong> to enter the slide overview. Hold down alt and click on any element to zoom in on it using <a href="http://lab.hakim.se/zoom-js">zoom.js</a>. Alt + click anywhere to zoom back out.
-					</p>
-				</section>
-
-				<section>
-					<h2>rvl.io</h2>
-					<p>
-						You know, we are nerds after all and will probably get a kick out of all of this HTML. BUT, if you really don't like writing slides in HTML you can use the online editor <a href="http://www.rvl.io" target="_blank">rvl.io</a>.
-					</p>
-				</section>
-
-				<section id="transitions">
-					<h2>Transition Styles</h2>
-					<p>
-						You can select from different transitions, like: <br>
-						<a href="?transition=cube#/transitions">Cube</a> -
-						<a href="?transition=page#/transitions">Page</a> -
-						<a href="?transition=concave#/transitions">Concave</a> -
-						<a href="?transition=zoom#/transitions">Zoom</a> -
-						<a href="?transition=linear#/transitions">Linear</a> -
-						<a href="?transition=none#/transitions">None</a> -
-						<a href="?#/transitions">Default</a>
-					</p>
-				</section>
-
-				<section id="themes">
-					<h2>Themes</h2>
-					<p>
-						Reveal.js comes with a few themes built in: <br>
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','dist/css/gdicool.css'); return false;">GDI Cool</a> -
-            <a href="?theme=gdilight#/themes" onclick="document.getElementById('theme').setAttribute('href','dist/css/gdilight.css'); return false;">GDI Light</a> -
-            <a href="?theme=gdisunny#/themes" onclick="document.getElementById('theme').setAttribute('href','dist/css/gdisunny.css'); return false;">GDI Sunny</a> -
-            <a href="?theme=default#/themes" onclick="document.getElementById('theme').setAttribute('href','dist/css/default.css'); return false;">Default</a>
-					</p>
-					<p>
-						<small>
-							* Theme demos are loaded after the presentation which leads to flicker. In production you should load your theme in the <code>&lt;head&gt;</code> using a <code>&lt;link&gt;</code>.
-						</small>
-					</p>
-				</section>
-
-				<section data-state="customevent">
-					<h2>Custom Events</h2>
-					<p>
-						Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.
-					</p>
-					<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">Reveal.addEventListener( 'customevent', function() {
-	console.log( '"customevent" has fired' );
-} );
-					</code></pre>
-				</section>
-
-				<section>
-					<h2>Clever Quotes</h2>
-					<p>
-						These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						The nice thing about standards is that there are so many to choose from</q> and block:
-					</p>
-					<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						For years there has been a theory that millions of monkeys typing at random on millions of typewriters would
-						reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.
-					</blockquote>
-				</section>
-
-
-				<section>
-					<h2>Intergalactic Interconnections</h2>
-					<p>
-						You can link between slides internally,
-						<a href="#/1">like this</a>.
-					</p>
-				</section>
-
-				<section>
-					<h2>Take a Moment</h2>
-					<p>
-						Press b or period on your keyboard to enter the 'paused' mode. This mode is helpful when you want to take distracting slides off the screen
-						during a presentation.
-					</p>
-				</section>
+            const mapStateToProps = (state, props) =&gt; ({
+              events: events(state),
+            });
+          </code></pre>
+        </section>
+      </section>
 
 				<section>
 					<h1>THE END</h1>
-					<h3>BY Girl Develop It</h3>
-					<h4>Special thanks to: Hakim El Hattab / hakim.se</h4>
+					<h4>Special thanks to: Hakim El Hattab / hakim.se for this template (reveal.js)</h4>
 				</section>
 
 			</div>
   		<footer>
         <div class="copyright">
-          Official class name here -- Chapter name here (if content modified from original) --
+          Introduction to Redux -- Girl Develop It Boston --
           <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/3.0/80x15.png" /></a>
         </div>
       </footer>
