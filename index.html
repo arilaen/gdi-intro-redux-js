@@ -595,6 +595,224 @@
           </section>
         </section>
 
+        <section>
+          <section>
+            <h2>Normalizing Data</h2>
+            <p>How would you handle adding the following API response data to your redux store?</p>
+            <pre><code contenteditable class="json">
+              {
+                "events": [
+                  {
+                    "id": 1,
+                    "name": "Introduction To React",
+                    "students": [
+                      { "id": 1, "name": "Eager Student 1" },
+                      { "id": 2, "name": "Eager Student 2" }
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "Introduction To Redux",
+                    "students": [
+                      { "id": 1, "name": "Eager Student 1" },
+                      { "id": 3, "name": "Eager Student 3" }
+                    ]
+                  },
+                ]
+              }
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Problems With Nested Data</h2>
+            <ul>
+              <li>Harder to update if there is duplicate data</li>
+              <li>Reducer logic becomes more complex</li>
+              <li>Can trigger unnecessary renders</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Normalizing data with <code>normalizr</code></h2>
+
+            <div style="display: flex;background: #333;">
+              <pre><code contenteditable class ="javascript">
+    {
+      "classes": [
+        {
+          "id": 1,
+          "name": "Introduction To React",
+          "students": [
+            { "id": 1, "name": "Eager Student 1" },
+            { "id": 2, "name": "Eager Student 2" }
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Introduction To Redux",
+          "students": [
+            { "id": 1, "name": "Eager Student 1" },
+            { "id": 3, "name": "Eager Student 3" }
+          ]
+        },
+      ]
+    }
+              </code></pre>
+              <pre><code contenteditable class="javascript">
+    {
+      "entities": {
+        "users": {
+          1: {
+            "id": 1,
+            "name": "Eager Student 1"
+          },
+          2: {
+            "id": 2,
+            "name": "Eager Student 2"
+          },
+          3: {
+            "id": 3,
+            "name": "Eager Student 3"
+          }
+        },
+        "events": {
+          1: {
+            "id": 1,
+            "name": "Introduction To React",
+            "users": [
+              1,
+              2
+            ]
+          },
+          2: {
+            "id": 2,
+            "name": "Introduction To Redux",
+            "users": [
+              1,
+              3
+            ]
+          }
+        }
+      },
+      "result": {
+        "events": [
+          1,
+          2
+        ]
+      }
+    }
+              </code></pre>
+            </div>
+          </section>
+
+          <section>
+            <h2>Using <code>normalizr</code></h2>
+
+            <pre><code contenteditable class="javascript">
+          import { normalize, schema } from 'normalizr';
+
+          const data = {
+            "events": [
+              {
+                "id": 1,
+                "name": "Introduction To React",
+                "users": [
+                  { "id": 1, "name": "Eager Student 1" },
+                  { "id": 2, "name": "Eager Student 2" }
+                ]
+              }
+            ]
+          }
+          const user = new schema.Entity('users');
+          const event = new schema.Entity('events', { users: [user]});
+          const normalizedData = normalize(data, { events: [event] })
+          // dispatch FETCH_EVENTS_REQUEST_SUCCESS action with normalizedData as payload
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Incorporating Normalized Data - users reducer</h2>
+
+            <pre><code contenteditable class="javascript">
+              import { combineReducers } from 'redux';
+
+              const initialState = {
+                byId: {},
+              };
+
+              const byId = (state = initialState.byId, action) =&gt; {
+                switch (action.type) {
+                  case 'FETCH_EVENTS_REQUEST_SUCCESS':
+                    // action.payload is the normalized data
+                    return { ...state, action.payload.entities.users };
+                  default:
+                    return state
+                }
+              });
+
+              const users = combineReducers({
+                byId,
+              });
+
+              export default users;
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Incorporating Normalized Data - events reducer</h2>
+
+            <pre><code contenteditable class="javascript">
+              import { combineReducers } from 'redux';
+
+              const initialState = {
+                byId: {},
+                indexIds: [],
+              };
+
+              const byId = (state = initialState.byId, action) =&gt; {
+                switch (action.type) {
+                  case 'FETCH_EVENTS_REQUEST_SUCCESS':
+                    // action.payload is the normalized data
+                    return { ...state, action.payload.entities.events };
+                  default:
+                    return state
+                }
+              });
+
+              const indexIds = (state = initialState.indexIds, action) =&gt; {
+                switch (action.type) {
+                  case 'FETCH_EVENTS_REQUEST_SUCCESS':
+                    // action.payload is the normalized data
+                    return [...state, action.payload.result.events];
+                  default:
+                    return state
+                }
+              });
+
+              const users = combineReducers({
+                byId,
+                indexIds,
+              });
+
+              export default events;
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Creating the root reducer from events reducer and users reducer</h2>
+
+            <pre><code contenteditable class="javascript">
+              import { combineReducers } from 'redux';
+              import events from './events';
+              import users from './users';
+
+              export default combineReducers({
+                events,
+                users,
+              });
+            </code></pre>
+          </section>
+        </section>
 
 
 				<section>
