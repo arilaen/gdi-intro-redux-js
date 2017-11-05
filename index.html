@@ -814,6 +814,57 @@
           </section>
         </section>
 
+        <section>
+          <section>
+            <h2>Querying Normalized Data</h2>
+            <ul>
+              <li>How do we get a specific resource?</li>
+              <li>How do we get a list of resources?</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Getting a specific event</h2>
+
+            <pre><code contenteditable class="javascript">
+              const mapStateToProps = (state, props) =&gt; ({
+                event: state.events.byId[props.eventId],
+              });
+            </code></pre>
+
+            <div class="fragment">
+              <p>Can clean up <code>mapStateToProps</code> by creating a selector function</p>
+
+              <pre><code contenteditable class="javascript">
+                const event = (state, props) =&gt; {
+                  const { byId } = state.events;
+                  const { eventId } = props;
+
+                  return byId[eventId];
+                };
+
+                const mapStateToProps = (state, props) =&gt; ({
+                  event: event(state, props),
+                });
+              </code></pre>
+            </div>
+          </section>
+
+          <section>
+            <h2>Getting a list of events</h2>
+
+            <pre><code contenteditable class="javascript">
+              const events = state =&gt; {
+                const { byId, indexIds } = state.events;
+                return indexIds.map(id =&gt; byId[id]);
+              };
+
+              const mapStateToProps = (state, props) =&gt; ({
+                events: events(state),
+              });
+            </code></pre>
+          </section>
+        </section>
 
 				<section>
 					<h2>Marvelous Unordered List</h2>
