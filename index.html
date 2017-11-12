@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>GDI Slides Template - The GDI HTML Presentation Framework</title>
+		<title>Introduction to Redux</title>
 
 		<meta name="description" content="Girl Develop It framework for easily creating beautiful presentations using HTML in GDI theme. Forked from Hakim El Hattab's reveal.js">
 		<meta name="author" content="Girl Develop It">
@@ -683,12 +683,11 @@
             <pre><code contenteditable class="javascript">
             import React from 'react';
             import { render } from 'react-dom';
-            import Hello from './Hello';
 
             const Hello = ({ name }) =&gt; &lt;h1&gt;Hello {name}!&lt;/h1&gt;;
 
             const App = () =&gt; (
-              &lt;div &gt;
+              &lt;div&gt;
                 &lt;Hello name="CodeSandbox" /&gt;
                 &lt;h2&gt;Start editing to see some magic happen {'\u2728'}&lt;/h2&gt;
               &lt;/div&gt;
@@ -704,9 +703,8 @@
             <pre><code contenteditable class="javascript">
             import React, { Component } from "react";
             import { render } from "react-dom";
-            import Hello from "./Hello";
 
-            class App extends Component {
+            class AppContainer extends Component {
               state = {
                 list: [],
                 nameInput: ""
@@ -721,19 +719,37 @@
               };
 
               render() {
+                const { name } = this.props;
                 const { list, nameInput } = this.state;
 
                 return (
-                  &lt;div&gt;
-                    &lt;h1&gt;{this.props.name}&lt;/h1&gt;
-                    &lt;input onChange={this.onChangeInput} value={nameInput} /&gt;
-                    &lt;button onClick={this.onClickButton}&gt;Add Item&lt;/button&gt;
-                    &lt;ul&gt;{list.map(name =&gt; &lt;li key={name}&gt;{name}&lt;/li&gt;)}&lt;/ul&gt;
-                  &lt;/div&gt;
-                );
+                  &lt;App
+                    list={list}
+                    name={name}
+                    nameInput={nameInput}
+                    onChangeInput={this.onChangeInput}
+                    onClickButton={this.onClickButton}
+                  /&gt;
+                )
               }
             }
-            render(&lt;App name="Grocery List" /&gt;, document.getElementById("root"));
+
+            export const App = ({
+              list,
+              name,
+              nameInput,
+              onChangeInput,
+              onClickButton,
+            }) =&gt; (
+              &lt;div&gt;
+                &lt;h1&gt;{name}&lt;/h1&gt;
+                &lt;input onChange={onChangeInput} value={nameInput} /&gt;
+                &lt;button onClick={onClickButton}&gt;Add Item&lt;/button&gt;
+                &lt;ul&gt;{list.map(name =&gt; &lt;li key={name}&gt;{name}&lt;/li&gt;)}&lt;/ul&gt;
+              &lt;/div&gt;
+            );
+
+            render(&lt;AppContainer name="Grocery List" /&gt;, document.getElementById("root"));
             </code></pre>
           </section>
         </section>
@@ -910,6 +926,359 @@ connect(mapStateToProps, mapDispatchToProps)(Counter);
 
       <section>
         <section>
+          <h2>Handling HTTP Requests</h2>
+
+          <p>Where do we make HTTP requests and how do we get the data in our store?</p>
+        </section>
+
+        <section>
+          <h2>Example API Data</h2>
+          <p>What would your reducer look like in order to handle this incoming data?</p>
+          <pre><code contenteditable class="json">
+            {
+              "events": [
+                {
+                  "id": 1,
+                  "name": "Introduction To React",
+                  ]
+                },
+                {
+                  "id": 2,
+                  "name": "Introduction To Redux",
+                },
+              ]
+            }
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Example events reducer</h2>
+
+          <pre><code contenteditable class="javascript">
+            import { combineReducers } from 'redux';
+
+            const initialState = {
+              all: [],
+              isLoading: false
+            };
+
+            // action.payload is the whole API response
+            const all = (state = initialState.all, action) =&gt; {
+              switch (action.type) {
+                case 'FETCH_EVENTS_REQUEST_SUCCESS':
+                  return action.payload.events;
+                default:
+                  return state
+              }
+            });
+
+            const isLoading = (state = initialState.isLoading, action) =&gt; {
+              switch (action.type) {
+                case 'FETCH_EVENTS_REQUEST':
+                  return true;
+                case 'FETCH_EVENTS_REQUEST_SUCCESS':
+                case 'FETCH_EVENTS_REQUEST_FAILURE':
+                  return false;
+                default:
+                  return state
+              }
+            });
+
+            const users = combineReducers({
+              all,
+              isLoading,
+            });
+
+            export default events;
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Action Creators</h2>
+
+          <pre><code contenteditable class="javascript">
+            const fetchEventsRequest = () =&gt; ({
+              type: 'FETCH_EVENTS_REQUEST',
+            });
+
+            const fetchEventsRequestFailure = () =&gt; ({
+              type: 'FETCH_EVENTS_REQUEST_FAILURE',
+            });
+
+            // payload is the whole API response
+            const fetchEventsRequestSuccess = payload =&gt; ({
+              type: 'FETCH_EVENTS_REQUEST_SUCCESS',
+              payload,
+            });
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Do API request in <code>componentDidMount</code></h3>
+
+          <pre><code contenteditable class="javascript">
+            import React, { Component } from 'react';
+            import { connect } from 'react-redux';
+            import Events from '../components/Events';
+            import {
+              fetchEventsRequest,
+              fetchEventsRequestFailure,
+              fetchEventsRequestSuccess,
+            } from '../reducers/events';
+
+            class EventsContainer extends Component {
+              componentDidMount() {
+                this.props.fetchEventsRequest();
+
+                fetch('http://localhost:3000/api/events')
+                .then(response =&gt; {
+                  if (response.ok) {
+                    return response.json();
+                  }
+
+                  throw new Error('request failed');
+                })
+                .then(
+                  payload =&gt; this.props.fetchEventsRequestSuccess(payload),
+                  () =&gt; this.props.fetchEventsRequestFailure(),
+                );
+              }
+
+              render() {
+                return &lt;Events events={this.props.events} /&gt;;
+              }
+            }
+
+            const mapStateToProps = state =&gt; ({
+              events: state.events.all,
+            });
+
+            export default connect(mapStateToProps, {
+              fetchEventsRequest,
+              fetchEventsRequestFailure,
+              fetchEventsRequestSuccess,
+            })(EventsContainer);
+          </code></pre>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h2>Handling Side-Effects</h2>
+
+          <p>Redux reducers and actions are pure. How do we handle anything that produces side-effects??</p>
+        </section>
+
+        <section>
+          <h3>Redux Middleware Handles Side-Effects</h3>
+
+          <ul>
+            <li>Code that runs after calling <code>dispatch</code> with an action, but before the dispatched action reaches the reducers.</li>
+            <li>Receives every dispatched action, <code>store</code>, <code>next</code>.</li>
+            <li>Can log actions, cancel actions, dispatch new actions, and much more.</li>
+            <li>It may run code that produces side effects!</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Redux Architecture With Middleware</h3>
+
+          <p>Add Image here</p>
+        </section>
+
+        <section>
+          <h3>Example middleware: Redux thunk</h3>
+
+          <span>To install: <code>yarn add redux-thunk</code></span>
+
+          <pre><code contenteditable class="javascript">
+          const thunk = store =&gt; next =&gt; action =&gt; {
+            if (typeof action === 'function') {
+              return action(store.dispatch, store.getState);
+            }
+
+            return next(action);
+          };
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Adding Middleware To Store</h3>
+
+          <pre><code contenteditable class="javascript">
+          import { createStore, applyMiddleware } from 'redux';
+          import thunk from 'redux-thunk';
+          import rootReducer from '../reducers';
+
+          const configureStore = preloadedState =&gt; {
+            const enhancer = applyMiddleware(thunk);
+
+            return createStore(rootReducer, preloadedState, enhancer);
+          };
+
+          export default configureStore;
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>How To Refactor HTTP Request Strategy?</h3>
+
+          <p class="fragment">
+            Create a single function that does the request and dispatches actions, and dispatch that function.
+          </p>
+
+          <pre><code contenteditable class="javascript">
+          // From EventsContainer file
+            componentDidMount() {
+              this.props.fetchEventsRequest();
+
+              fetch('http://localhost:3000/api/events')
+              .then(response =&gt; {
+                if (response.ok) {
+                  return response.json();
+                }
+
+                throw new Error('request failed');
+              })
+              .then(
+                payload =&gt; this.props.fetchEventsRequestSuccess(payload),
+                () =&gt; this.props.fetchEventsRequestFailure(),
+              );
+            }
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Creating A Thunk</h2>
+
+          <pre><code contenteditable class="javascript">
+            const fetchEventsRequest = () =&gt; ({
+              type: 'FETCH_EVENTS_REQUEST',
+            });
+
+            const fetchEventsRequestFailure = () =&gt; ({
+              type: 'FETCH_EVENTS_REQUEST_FAILURE',
+            });
+
+            // payload is the whole API response
+            const fetchEventsRequestSuccess = payload =&gt; ({
+              type: 'FETCH_EVENTS_REQUEST_SUCCESS',
+              payload,
+            });
+
+            export const fetchEvents = () =&gt; (dispatch, getState) =&gt; {
+                dispatch(fetchEventsRequest());
+
+                fetch('http://localhost:3000/api/events')
+                .then(response =&gt; {
+                  if (response.ok) {
+                    return response.json();
+                  }
+
+                  throw new Error('request failed');
+                })
+                .then(
+                  payload =&gt; dispatch(fetchEventsRequestSuccess(payload)),
+                  () =&gt; dispatch(fetchEventsRequestFailure()),
+                );
+            }
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Example API Data</h2>
+          <p>What would your reducer look like in order to handle this incoming data?</p>
+          <pre><code contenteditable class="json">
+            {
+              "events": [
+                {
+                  "id": 1,
+                  "name": "Introduction To React",
+                  ]
+                },
+                {
+                  "id": 2,
+                  "name": "Introduction To Redux",
+                },
+              ]
+            }
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Example events reducer (unchanged)</h3>
+
+          <pre><code contenteditable class="javascript">
+            import { combineReducers } from 'redux';
+
+            const initialState = {
+              all: [],
+              isLoading: false
+            };
+
+            // action.payload is the whole API response
+            const all = (state = initialState.all, action) =&gt; {
+              switch (action.type) {
+                case 'FETCH_EVENTS_REQUEST_SUCCESS':
+                  return action.payload.events;
+                default:
+                  return state
+              }
+            });
+
+            const isLoading = (state = initialState.isLoading, action) =&gt; {
+              switch (action.type) {
+                case 'FETCH_EVENTS_REQUEST':
+                  return true;
+                case 'FETCH_EVENTS_REQUEST_SUCCESS':
+                case 'FETCH_EVENTS_REQUEST_FAILURE':
+                  return false;
+                default:
+                  return state
+              }
+            });
+
+            const users = combineReducers({
+              all,
+              isLoading,
+            });
+
+            export default events;
+          </code></pre>
+        </section>
+
+        <section>
+          <h4>Do API request in <code>componentDidMount</code> With Thunk</h4>
+
+          <pre><code contenteditable class="javascript">
+            import React, { Component } from 'react';
+            import { connect } from 'react-redux';
+            import Events from '../components/Events';
+            import { fetchEvents } from '../reducers/events';
+
+            class EventsContainer extends Component {
+              componentDidMount() {
+                fetchEvents();
+              }
+
+              render() {
+                return &lt;Events events={this.props.events} /&gt;;
+              }
+            }
+
+            const mapStateToProps = state =&gt; ({
+              events: state.events.all,
+            });
+
+            export default connect(mapStateToProps, {
+              fetchEvents,
+            })(EventsContainer);
+          </code></pre>
+        </section>
+      </section>
+
+      <section>
+        <section>
           <h2>Normalizing Data</h2>
           <p>How would you handle adding the following API response data to your redux store?</p>
           <pre><code contenteditable class="json">
@@ -1020,10 +1389,8 @@ connect(mapStateToProps, mapDispatchToProps)(Counter);
 
         <section>
           <h2>Using <code>normalizr</code></h2>
-          <pre><code contenteditable class="javascript">
-        import { normalize, schema } from 'normalizr';
-
-        const data = {
+          <pre><code contenteditable class="json">
+        {
           "events": [
             {
               "id": 1,
@@ -1035,15 +1402,43 @@ connect(mapStateToProps, mapDispatchToProps)(Counter);
             }
           ]
         }
+          </code></pre>
+          <pre><code contenteditable class="javascript">
+        import { normalize, schema } from 'normalizr';
+
         const user = new schema.Entity('users');
         const event = new schema.Entity('events', { users: [user]});
-        const normalizedData = normalize(data, { events: [event] })
-        // dispatch FETCH_EVENTS_REQUEST_SUCCESS action with normalizedData as payload
+        export const normalizeEvents = data =&gt; normalize(data, { events: [event] })
           </code></pre>
         </section>
 
         <section>
-          <h2>Incorporating Normalized Data - users reducer</h2>
+          <h2>Updating <code>fetchEvents</code> thunk</h2>
+          <pre><code contenteditable class="javascript">
+            import { normalizeEvents } from './normalizers';
+
+            export const fetchEvents = () =&gt; (dispatch, getState) =&gt; {
+                dispatch(fetchEventsRequest());
+
+                fetch('http://localhost:3000/api/events')
+                .then(response =&gt; {
+                  if (response.ok) {
+                    return response.json();
+                  }
+
+                  throw new Error('request failed');
+                })
+                .then(responseBody =&gt; normalizeEvents(responseBody))
+                .then(
+                  payload =&gt; dispatch(fetchEventsRequestSuccess(payload)),
+                  () =&gt; dispatch(fetchEventsRequestFailure()),
+                );
+            }
+          </code></pre>
+        </section>
+
+        <section>
+          <h4>Incorporating Normalized Data - users reducer</h4>
 
           <pre><code contenteditable class="javascript">
             import { combineReducers } from 'redux';
@@ -1071,7 +1466,7 @@ connect(mapStateToProps, mapDispatchToProps)(Counter);
         </section>
 
         <section>
-          <h2>Incorporating Normalized Data - events reducer</h2>
+          <h4>Incorporating Normalized Data - events reducer</h4>
 
           <pre><code contenteditable class="javascript">
             import { combineReducers } from 'redux';
@@ -1111,7 +1506,8 @@ connect(mapStateToProps, mapDispatchToProps)(Counter);
         </section>
 
         <section>
-          <h2>Creating the root reducer from events reducer and users reducer</h2>
+          <h3>Creating the root reducer from</h3>
+          <h3><code>events</code>reducer and <code>users</code>reducer</h3>
 
           <pre><code contenteditable class="javascript">
             import { combineReducers } from 'redux';
