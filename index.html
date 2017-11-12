@@ -850,6 +850,24 @@ connect(mapStateToProps, mapDispatchToProps)(Counter);
 						</code></pre>
 					</section>
 					<section>
+						<h2>One more step...</h2>
+						<ul>
+							<li>For <strong>connect</strong> to work, we need to make sure Redux state is attached to our React <code>context</code>.</li>
+							<li>We do this by using a react-redux component called Provider, which will wrap our entire app, and thus allow any component to access Redux state and use <strong>connect</strong>.</li>
+							<li>Then connect uses context.store behind the scenes to access state and dispatch for <strong>mapStateToProps</strong> and <strong>mapDispatchToProps</strong>.</li>
+						</ul>
+						<pre><code class ="javascript" contenteditable="true">
+const store = createStore(reducer)
+
+render(
+  &lt;Provider store={store}&gt;
+    &lt;App /&gt;
+  &lt;/Provider&gt;,
+  document.getElementById('root')
+)
+						</code></pre>
+					</section>
+					<section>
 						<h2>Time to practice using connect!</h2>
 						<p>We'll convert this counter example to use react-redux: <a href="https://codesandbox.io/s/q3zoo9l9w9" target="_blank">https://codesandbox.io/s/q3zoo9l9w9M</a></p>
 						<p>You can also run and update the counter example <a href="https://github.com/reactjs/redux/tree/master/examples/counter" target="_blank">locally</a></p>
@@ -923,6 +941,13 @@ connect(mapStateToProps, mapDispatchToProps)(Counter);
             </ul>
           </section>
         </section>
+
+				<section>
+					<h2>Practice time!</h2>
+					<p>Let's practice implementing connect on our own Redux app!</p>
+					<p>Clone and complete a todo app: <a href="https://github.com/arilaen/redux-practice-todos" target="_blank">https://github.com/arilaen/redux-practice-todos</a>
+					</p>
+				</section>
 
       <section>
         <section>
