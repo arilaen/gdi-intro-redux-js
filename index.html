@@ -107,10 +107,10 @@
         <section>
           <h2>Table of contents</h2>
           <ol>
-            <li><a href="#/6">First Session - Introduction to Redux</a></li>
-            <li><a href="#/2">Second Session - Redux and React</a></li>
-            <li><a href="#/3">Third Session - Advanced Redux Concepts</a></li>
-            <li><a href="#/4">Fourth Session - Build Your Own Redux App</a></li>
+            <li><a href="#/3">First Session - Introduction to Redux</a></li>
+            <li><a href="#/15">Second Session - Redux and React</a></li>
+            <li><a href="#/2">Third Session - Advanced Redux Concepts</a></li>
+            <li><a href="#/2">Fourth Session - Build Your Own Redux App</a></li>
           </ol>
         </section>
 
@@ -602,6 +602,55 @@
         </section>
 
         <section>
+          <section>
+            <h2>Day 1 Review</h2>
+            <ul>
+              <li>What is Redux?</li>
+              <li>ES6</li>
+              <li>Actions, Reducers, State</li>
+              <li>Finishing local setup</li>
+            </ul>
+          </section>
+          <section>
+            <h2>What is Redux?</h2>
+            <ul>
+              <li>"Single immutable state tree"</li>
+              <li>Predictable</li>
+              <li>Framework agnostic</li>
+              <li>Allows features like time travel</li>
+              <li><a href="/#/3/2">Redux flow</a></li>
+            </ul>
+          </section>
+          <section>
+            <h2>ES6 Features</h2>
+            <ul>
+              <li>Arrow functions</li>
+              <li>Object.assign</li>
+              <li>Rest/spread functions</li>
+            </ul>
+            <p>Codepen practice: <a href="https://codepen.io/arilaen/pen/qVNdvJ?editors=0010">https://codepen.io/arilaen/pen/qVNdvJ?editors=0010</a></p>
+          </section>
+          <section>
+            <h2>What entities do we use in Redux?</h2>
+            <ul>
+              <li>Actions</li>
+              <li>Reducers</li>
+              <li>State</li>
+              <p>Codepen: <a href="https://codepen.io/arilaen/pen/zPqvNe">https://codepen.io/arilaen/pen/zPqvNe</a><p>
+            </ul>
+          </section>
+          <section>
+            <h2>Local environment setup</h2>
+            <ol>
+              <li>Install create-react-app tool: <code>npm i -g create-react-app</code></li>
+              <li>Create a new app: <code>create-react-app gdi-redux;cd gdi-redux</code></li>
+              <li>Install Redux and react-redux (which we'll cover soon!): <code>npm install redux react-redux --save</code></li>
+              <li>Try using Redux in src/index.js</li>
+            </ol>
+          </section>
+        </section>
+
+				<section>
           <h2>Additional Redux Resources</h2>
           <ul>
             <li><a href="http://redux.js.org/">Official Redux Docs</a></li>
@@ -689,54 +738,109 @@
           </section>
         </section>
 
-        <section>
-          <section>
-            <h2>Day 1 Review</h2>
-            <ul>
-              <li>What is Redux?</li>
-              <li>ES6</li>
-              <li>Actions, Reducers, State</li>
-              <li>Finishing local setup</li>
-            </ul>
-          </section>
-          <section>
-            <h2>What is Redux?</h2>
-            <ul>
-              <li>"Single immutable state tree"</li>
-              <li>Predictable</li>
-              <li>Framework agnostic</li>
-              <li>Allows features like time travel</li>
-              <li><a href="/#/3/2">Redux flow</a></li>
-            </ul>
-          </section>
-          <section>
-            <h2>ES6 Features</h2>
-            <ul>
-              <li>Arrow functions</li>
-              <li>Object.assign</li>
-              <li>Rest/spread functions</li>
-            </ul>
-            <p>Codepen practice: <a href="https://codepen.io/arilaen/pen/qVNdvJ?editors=0010">https://codepen.io/arilaen/pen/qVNdvJ?editors=0010</a></p>
-          </section>
-          <section>
-            <h2>What entities do we use in Redux?</h2>
-            <ul>
-              <li>Actions</li>
-              <li>Reducers</li>
-              <li>State</li>
-              <p>Codepen: <a href="https://codepen.io/arilaen/pen/zPqvNe">https://codepen.io/arilaen/pen/zPqvNe</a><p>
-            </ul>
-          </section>
-          <section>
-            <h2>Local environment setup</h2>
-            <ol>
-              <li>Install create-react-app tool: <code>npm i -g create-react-app</code></li>
-              <li>Create a new app: <code>create-react-app gdi-redux;cd gdi-redux</code></li>
-              <li>Install Redux and react-redux (which we'll cover soon!): <code>npm install redux react-redux --save</code></li>
-              <li>Try using Redux in src/index.js</li>
-            </ol>
-          </section>
-        </section>
+				<section>
+					<section>
+						<h2><strong>Connect</strong>ing React and Redux</h2>
+						<ul>
+							<li>Context</li>
+							<li>React-redux library</li>
+							<li>Connect</li>
+							<li>MapStateToProps</li>
+							<li>MapDispatchToProps</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Context</h2>
+						<ul>
+							<li>Context is an object available to all of your React components</li>
+							<li>Allows you to use state in child components</li>
+							<li>Goes a bit against the React philosophy of passing data from parent components to child components through props</li>
+							<li>However it makes it easier to separate container and view components, especially when using Redux!</li>
+						</ul>
+					</section>
+					<section>
+						<h2>React-redux</h2>
+						<ul>
+							<li>Contains helper methods to integrate React and Redux seamlessly</li>
+							<li>Uses store.subscribe() and context behind the scenes to make Redux state available to any React component</li>
+						</ul>
+						<pre><code class ="javascript">npm i react-redux --save</code></pre>
+					</section>
+					<section>
+						<h2>Connect</h2>
+						<ul>
+							<li>A react-redux method that curries React components with Redux logic</li>
+							<li>A higher-order function that takes one or two mappers to convert Redux store elements into React props</li>
+							<li>Returns a function that takes a React component as an argument, and adds the mapped props to it</li>
+						</ul>
+						<pre><code class ="javascript" contenteditable="true">
+connect(mapStateToProps, mapDispatchToProps)(Filter);
+
+connect(mapStateToProps)(Header); // If mapDispatchToProps is not defined, the dispatch method is added to the Header's props!
+						</code></pre>
+					</section>
+					<section>
+						<h2>MapStateToProps</h2>
+						<p><code>state => props</code></p>
+						<ul>
+							<li>Takes your Redux state and returns an object with properties that will be attached to the React component's props argument</li>
+							<li>Can also use the props on the component (ownProps) as a second argument</li>
+						</ul>
+						<pre><code class ="javascript" contenteditable="true">
+const mapStateToProps = (state) => ({
+	counter: state.counter,
+	user: state.user,
+	todos: state.todos.filter(todo => todo.type === state.visibleFilterType)
+});
+
+const mapStateToProps = (state, ownProps) => ({
+	active: state.visibleFilterType === ownProps.filterType
+});
+						</code></pre>
+					</section>
+					<section>
+						<h2>MapDispatchToProps</h2>
+						<p><code>dispatch => props</code></p>
+						<ul>
+							<li>Maps your dispatch methods to props</li>
+							<li>If not used, { dispatch } itself will be added to props</li>
+							<li>Can also use existing props (ownProps)</li>
+						</ul>
+						<pre><code>
+const mapDispatchToProps = (dispatch) => ({
+	increment: dispatch.increment,
+	decrement: state.decrement
+});
+						</code></pre>
+					</section>
+					<section>
+						<h2>Using connect</h2>
+						<pre><code class ="javascript" contenteditable="true">
+const mapStateToProps = (state) => ({
+	counter: state.counter
+});
+const mapDispatchToProps = (dispatch) => ({
+	increment: dispatch.increment,
+	decrement: dispatch.decrement
+});
+const Counter = ({ counter, increment, decrement }) => (
+	<div>
+		<span>{counter}</span>
+		<button onClick={increment}>+</button>
+		<button onClick={decrement}>-</button>
+	</div>
+);
+connect(mapStateToProps, mapDispatchToProps)(Counter);
+						</code></pre>
+					</section>
+					<section>
+						<h2>Time to practice using connect!</h2>
+						<p>We'll convert this counter example to use react-redux: <a href="https://codesandbox.io/s/q3zoo9l9w9" target="_blank">https://codesandbox.io/s/q3zoo9l9w9M</a></p>
+						<p>You can also run and update the counter example <a href="https://github.com/reactjs/redux/tree/master/examples/counter" target="_blank">locally</a></p>
+						<p>Finished example: <a href="https://codesandbox.io/s/64qv366r63" target="_blank">https://codesandbox.io/s/64qv366r63</a></p>
+						<p>Also check out the Redux docs for more <a href="https://redux.js.org/docs/introduction/Examples.html" target="_blank">examples</a>!</p>
+					</section>
+				</section>
 
         <section>
           <section>
