@@ -614,30 +614,30 @@
           <section>
             <h2>What is Redux?</h2>
             <ul>
-              <li>"Single immutable state tree"</li>
-              <li>Predictable</li>
-              <li>Framework agnostic</li>
-              <li>Allows features like time travel</li>
-              <li><a href="/#/3/2">Redux flow</a></li>
+              <li class="fragment">"Single immutable state tree"</li>
+              <li class="fragment">Predictable</li>
+              <li class="fragment">Framework agnostic</li>
+              <li class="fragment">Allows features like time travel</li>
+              <li class="fragment"><a href="/#/3/2">Redux flow</a></li>
             </ul>
           </section>
           <section>
             <h2>ES6 Features</h2>
             <ul>
-              <li>Arrow functions</li>
-              <li>Object.assign</li>
-              <li>Rest/spread functions</li>
+              <li class="fragment">Arrow functions</li>
+              <li class="fragment">Object.assign</li>
+              <li class="fragment">Rest/spread functions</li>
             </ul>
             <p>Codepen practice: <a href="https://codepen.io/arilaen/pen/qVNdvJ?editors=0010">https://codepen.io/arilaen/pen/qVNdvJ?editors=0010</a></p>
           </section>
           <section>
             <h2>What entities do we use in Redux?</h2>
             <ul>
-              <li>Actions</li>
-              <li>Reducers</li>
-              <li>State</li>
-              <p>Codepen: <a href="https://codepen.io/arilaen/pen/zPqvNe">https://codepen.io/arilaen/pen/zPqvNe</a><p>
+              <li class="fragment">Actions</li>
+              <li class="fragment">Reducers</li>
+              <li class="fragment">State</li>
             </ul>
+						<p class="fragment">Codepen: <a href="https://codepen.io/arilaen/pen/zPqvNe">https://codepen.io/arilaen/pen/zPqvNe</a><p>
           </section>
           <section>
             <h2>Local environment setup</h2>
@@ -648,15 +648,6 @@
               <li>Try using Redux in src/index.js</li>
             </ol>
           </section>
-        </section>
-
-				<section>
-          <h2>Additional Redux Resources</h2>
-          <ul>
-            <li><a href="http://redux.js.org/">Official Redux Docs</a></li>
-            <li><a href="https://egghead.io/courses/getting-started-with-redux">Getting Started with Redux by Dan Abramov (Redux creator)</a></li>
-            <li><a href="https://egghead.io/courses/building-react-applications-with-idiomatic-redux">Building React Applications with Idiomatic Redux by Dan Abramov</a></li>
-          </ul>
         </section>
 
         <section>
@@ -673,7 +664,7 @@
             <ul>
               <li>Functional components are UI-only, and do not need to access state</li>
               <li> -> Therefore they can be expressed as single render functions.</li>
-              <li>Container components handle state, and use the class-based pattern, which includes the render function and anything else that is required</li>
+              <li>Container components handle state, and use the class-based pattern, which includes the render function and any other required life cycle methods</li>
             </ul>
           </section>
 
@@ -763,6 +754,7 @@
 							<li>Connect</li>
 							<li>MapStateToProps</li>
 							<li>MapDispatchToProps</li>
+							<li>Provider</li>
 						</ul>
 					</section>
 					<section>
