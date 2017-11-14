@@ -816,8 +816,8 @@ const mapStateToProps = (state, ownProps) => ({
 						</ul>
 						<pre><code>
 const mapDispatchToProps = (dispatch) => ({
-	increment: dispatch.increment,
-	decrement: state.decrement
+	increment: () => dispatch(actions.increment()),
+	decrement: () => dispatch(actions.decrement())
 });
 						</code></pre>
 					</section>
@@ -828,8 +828,8 @@ const mapStateToProps = (state) => ({
 	counter: state.counter
 });
 const mapDispatchToProps = (dispatch) => ({
-	increment: dispatch.increment,
-	decrement: dispatch.decrement
+	increment: () => dispatch(actions.increment()),
+	decrement: () => dispatch(actions.decrement())
 });
 const Counter = ({ counter, increment, decrement }) => (
 	<div>
@@ -1100,7 +1100,9 @@ render(
         <section>
           <h3>Redux Architecture With Middleware</h3>
 
-          <p>Add Image here</p>
+          <p>
+						<img src="./redux-flow-with-history" style="border: none; box-shadow:none;" />
+					</p>
         </section>
 
         <section>
