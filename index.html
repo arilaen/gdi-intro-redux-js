@@ -109,8 +109,8 @@
           <ol>
             <li><a href="#/3">First Session - Introduction to Redux</a></li>
             <li><a href="#/15">Second Session - Redux and React</a></li>
-            <li><a href="#/2">Third Session - Advanced Redux Concepts</a></li>
-            <li><a href="#/2">Fourth Session - Build Your Own Redux App</a></li>
+            <li><a href="#/20">Third Session - Continuing Redux and React</a></li>
+            <li><a href="#/2">Fourth Session - Advanced Redux Concepts</a></li>
           </ol>
         </section>
 
@@ -940,6 +940,155 @@ render(
 					<p>Clone and complete a todo app: <a href="https://github.com/arilaen/redux-practice-todos" target="_blank">https://github.com/arilaen/redux-practice-todos</a>
 					</p>
 				</section>
+
+      <section>
+        <section>
+            <h2>Day 2 Review</h2>
+            <ul>
+              <li><code>Provider</code></li>
+              <li><code>connect</code> and <code>mapStateToProps</code></li>
+              <li><code>mapDispatchToProps</code></li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Provider</h2>
+            <p>What prop do you need to give to the <code>Provider</code> component?</p>
+            <p class="fragment">Answer: The Redux <code>store</code></p>
+            <p class="fragment">What is the purpose of the <code>Provider</code>?</p>
+            <p class="fragment">Answer: Provides <code>store</code> to all child components via context</p>
+        </section>
+
+        <section>
+            <h2>Provider example usage</h2>
+            <pre><code contenteditable class="javascript">
+            import React from 'react';
+            import { render } from 'react-dom';
+            import { Provider } from 'react-redux';
+            import { createStore } from 'redux';
+            import rootReducer from './rootReducer';
+            import App from './App';
+
+            const store = createStore(rootReducer);
+
+            render(
+              &lt;Provider store={store}&gt;
+                &lt;App /&gt;
+              &lt;/Provider&gt;,
+              document.getElementById('root')
+            );
+            </code></pre>
+        </section>
+
+        <section>
+          <h2>connect</h2>
+          <p>What is the purpose of <code>connect</code>?</p>
+          <p class="fragment">Answer: connects component to Redux <code>store</code> via a HOC</p>
+          <p class="fragment">What does <code>connect</code> receive as the first argument?</p>
+          <p class="fragment">Answer: A <code>mapStateToProps</code> function</p>
+          <p class="fragment">What does a <code>mapStateToProps</code> function do?</p>
+          <p class="fragment">
+            Answer: It has access to the <code>store</code>'s state, so it create props from store state. These props will be passed down the component given to the<code>connect</code> HOC.
+          </p>
+        </section>
+
+        <section>
+          <h2>connect and mapStateToProps example usage</h2>
+          <pre><code contenteditable class="javascript">
+          import React from 'react';
+          import { connect } from 'react-redux';
+
+          const Counter = ({ count }) =&gt; (
+            &lt;h1&gt;Count is: {count}&lt;h1&gt;
+          );
+
+          const mapStateToProps = state =&gt; ({
+            count: state.count,
+          });
+
+          export default connect(mapStateToProps)(Counter);
+          </code></pre>
+          <p>Assuming state looks like</p>
+          <pre><code contenteditable class="json">
+          {
+            count: 5
+          }
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>mapDispatchToProps</h2>
+          <p>Where is <code>mapDispatchToProps</code> used?</p>
+          <p class="fragment">Answer: It is given as the second argument to <code>connect</code></p>
+          <p class="fragment">What does a <code>mapDispatchToProps</code> function do?</p>
+          <p class="fragment">
+            Answer: It has access to the <code>store</code>'s <code>dispatch</code>, so it create props from <code>dispatch</code> and actions. These props will be passed down the component given to the<code>connect</code> HOC.
+          </p>
+          <p class="fragment">What does a <code>mapDispatchToProps</code> object do?</p>
+          <p class="fragment">
+            Answer: creates functions that dispatch the actions given in the object. These functions will be passed down as props to the component given to the<code>connect</code> HOC.
+          </p>
+        </section>
+
+        <section>
+          <h3>mapDispatchToProps example usage # 1</h3>
+          <pre><code contenteditable class="javascript">
+          import React from 'react';
+          import { connect } from 'react-redux';
+          import { addOne, subtractOne } from './actions';
+
+          const Counter = ({ count, onClickAddOne, onClickSubtractOne }) =&gt; (
+            &lt;h1&gt;Count is: {count}&lt;h1&gt;
+            &lt;button onClick={onClickAddOne}&gt;Add&lt;button/&gt;
+            &lt;button onClick={onClickSubtractOne}&gt;Subtract&lt;button/&gt;
+          );
+
+          const mapStateToProps = state =&gt; ({ count: state.count });
+
+          const mapDispatchToProps = dispatch =&gt; ({
+            onClickAddOne: () =&gt; dispatch(addOne()),
+            onClickSubtractOne: () =&gt; dispatch(subtractOne()),
+          });
+
+          export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>mapDispatchToProps example usage # 2</h3>
+          <pre><code contenteditable class="javascript">
+          import React from 'react';
+          import { connect } from 'react-redux';
+          import { addOne, subtractOne } from './actions';
+
+          const Counter = ({ count, onClickAddOne, onClickSubtractOne }) =&gt; (
+            &lt;h1&gt;Count is: {count}&lt;h1&gt;
+            &lt;button onClick={onClickAddOne}&gt;Add&lt;button/&gt;
+            &lt;button onClick={onClickSubtractOne}&gt;Subtract&lt;button/&gt;
+          );
+
+          const mapStateToProps = state =&gt; ({ count: state.count });
+
+          const mapDispatchToProps = ({
+            onClickAddOne: addOne,
+            onClickSubtractOne: subtractOne,
+          });
+
+          export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+          </code></pre>
+        </section>
+      </section>
+
+      <section>
+        <h3>Practice converting an app to using Redux</h3>
+        <a href="https://github.com/davidrf/intro-to-redux-day-2-review">https://github.com/davidrf/intro-to-redux-day-2-review</a>
+        <pre><code>
+        $ git clone https://github.com/davidrf/intro-to-redux-day-2-review.git
+        $ cd intro-to-redux-day-2-review
+        $ yarn install
+        $ yarn start
+        </code></pre>
+      </section>
 
       <section>
         <section>
