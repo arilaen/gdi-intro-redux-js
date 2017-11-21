@@ -1091,8 +1091,11 @@ render(
           <p class="fragment">Wrapping components in <code>connect</code> creates new container components that have access to Redux state and dispatch (as props)!</p>
           <p class="fragment">If the original components do not have a lot of their own state logic, they can still be presentational components. Usually, only the connected component will be exported.</p>
           <p class="fragment">Example: TodoFilter that filters visible todos based on their completed state, and <code>export default VisibleTodoFilter = connect(mapStateToProps)(TodoFilter)</code></p>
-          <p class="fragment">Other presentational components can be reused, so should be created separately, and used in other components created with <code>connect</code>.
+          <p class="fragment">Other presentational components can be reused, so should be created separately, and used in other components created with <code>connect</code>.</p>
           <p class="fragment">Example: A <code>Link</code> component can be used to create <code>HeaderLink</code> and <code>FooterLink</code>components! In that case you may want to create a Link component and separate files for HeaderLink and FooterLink.</p>
+        </section>
+        <section>
+          <h2><code>connect</code> and containers</h2>
           <p class="fragment">Are components created with connect containers? Technically yes. I don't always put them in the containers folder if the components they're created from are small and don't have child components. There's no hard and fast rule!</p>
           <p class="fragment">Further reading: <a href="https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0">Presentational and Container Components</a> by Dan Abramov</p>
         </section>
